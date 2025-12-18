@@ -1,0 +1,175 @@
+import { Mail, Phone, Send } from 'lucide-react';
+import { useState } from 'react';
+import { useParallax } from '../hooks/useParallax';
+
+function Contact() {
+  const { offset, elementRef } = useParallax(0.15);
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    subject: '',
+    message: ''
+  });
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  return (
+    <section
+      id="contact"
+      ref={elementRef as React.RefObject<HTMLElement>}
+      className="py-12 sm:py-16 md:py-24 bg-black border-b border-white/10"
+    >
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div
+          className="text-center mb-16 transition-transform duration-200 ease-out"
+          style={{ transform: `translateY(${-offset * 0.2}px)` }}
+        >
+          <span className="text-brand tracking-[0.3em] text-sm font-light uppercase mb-4 block">
+            Get In Touch
+          </span>
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4 md:mb-6">
+            Contact Us
+          </h2>
+          <div className="w-24 h-px bg-brand mx-auto mb-6"></div>
+          <p className="text-gray-400 max-w-2xl mx-auto leading-relaxed">
+            Whether you're interested in our products, seeking distribution opportunities, or have questions about our craft, we'd love to hear from you.
+          </p>
+        </div>
+
+        <div
+          className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 mb-12 md:mb-16 transition-transform duration-200 ease-out"
+          style={{ transform: `translateY(${-offset * 0.15}px)` }}
+        >
+          <div className="lg:col-span-2">
+            <form onSubmit={handleSubmit} className="space-y-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-white text-sm font-light mb-2 tracking-wide">
+                    Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    value={formData.name}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-white/5 border border-white/20 px-4 py-3 text-white focus:border-brand focus:outline-none transition-colors"
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-white text-sm font-light mb-2 tracking-wide">
+                    Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    value={formData.email}
+                    onChange={handleChange}
+                    required
+                    className="w-full bg-white/5 border border-white/20 px-4 py-3 text-white focus:border-brand focus:outline-none transition-colors"
+                    placeholder="john@example.com"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label htmlFor="subject" className="block text-white text-sm font-light mb-2 tracking-wide">
+                  Subject *
+                </label>
+                <select
+                  id="subject"
+                  name="subject"
+                  value={formData.subject}
+                  onChange={handleChange}
+                  required
+                  className="w-full bg-white/5 border border-white/20 px-4 py-3 text-white focus:border-brand focus:outline-none transition-colors"
+                >
+                  <option value="">Select a subject</option>
+                  <option value="product">Product Inquiry</option>
+                  <option value="distribution">Distribution Opportunities</option>
+                  <option value="partnership">Partnership</option>
+                  <option value="press">Press & Media</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label htmlFor="message" className="block text-white text-sm font-light mb-2 tracking-wide">
+                  Message *
+                </label>
+                <textarea
+                  id="message"
+                  name="message"
+                  value={formData.message}
+                  onChange={handleChange}
+                  required
+                  rows={6}
+                  className="w-full bg-white/5 border border-white/20 px-4 py-3 text-white focus:border-brand focus:outline-none transition-colors resize-none"
+                  placeholder="Tell us about your inquiry..."
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="btn-shine w-full md:w-auto px-10 py-4 rounded-full border border-white/40 text-white font-semibold tracking-wide bg-transparent hover:border-brand transition-all duration-300 flex items-center justify-center gap-2"
+              >
+                <Send size={18} />
+                SEND MESSAGE
+              </button>
+
+              <p className="text-gray-500 text-xs">
+                * Required fields. By submitting this form, you agree to be contacted regarding your inquiry.
+              </p>
+            </form>
+          </div>
+
+          <div className="space-y-8">
+            <div className="bg-black border border-white/10 p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-brand/10 flex items-center justify-center flex-shrink-0">
+                  <Phone className="text-brand" size={24} />
+                </div>
+                <div>
+                  <h3 className="text-white font-light text-lg mb-2">Call Us</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    +91 7000970920<br />
+                    Mon - Fri: 9AM - 6PM EST
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div className="bg-black border border-white/10 p-6">
+              <div className="flex items-start gap-4">
+                <div className="w-12 h-12 bg-brand/10 flex items-center justify-center flex-shrink-0">
+                  <Mail className="text-brand" size={24} />
+                </div>
+                <div>
+                  <h3 className="text-white font-light text-lg mb-2">Email Us</h3>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    info@rohitgroup.com<br />
+                    press@rohitgroup.com
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default Contact;
