@@ -1,6 +1,7 @@
-import { Mail, Phone, Send } from 'lucide-react';
+import { Mail, Phone, Send, Loader2, CheckCircle, XCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useParallax } from '../hooks/useParallax';
+import emailjs from '@emailjs/browser';
 
 function Contact() {
   const { offset, elementRef } = useParallax(0.15);
@@ -10,9 +11,52 @@ function Contact() {
     subject: '',
     message: ''
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+
+    try {
+      // Replace these with your EmailJS credentials
+      // You'll get these from https://www.emailjs.com after setting up an account
+      const serviceId = 'YOUR_SERVICE_ID';
+      const templateId = 'YOUR_TEMPLATE_ID';
+      const publicKey = 'YOUR_PUBLIC_KEY';
+
+      await emailjs.send(
+        serviceId,
+        templateId,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+          to_email: 'info@rohitgroup.com', // Your email address
+        },
+        publicKey
+      );
+
+      setSubmitStatus('success');
+      setFormData({ name: '', email: '', subject: '', message: '' });
+      
+      // Reset success message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+    } catch (error) {
+      console.error('Email sending failed:', error);
+      setSubmitStatus('error');
+      
+      // Reset error message after 5 seconds
+      setTimeout(() => {
+        setSubmitStatus('idle');
+      }, 5000);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -123,11 +167,35 @@ function Contact() {
 
               <button
                 type="submit"
-                className="btn-shine w-full md:w-auto px-10 py-4 rounded-full border border-white/40 text-white font-semibold tracking-wide bg-transparent hover:border-brand transition-all duration-300 flex items-center justify-center gap-2"
+                disabled={isSubmitting}
+                className="btn-shine w-full md:w-auto px-10 py-4 rounded-full border border-white/40 text-white font-semibold tracking-wide bg-transparent hover:border-brand transition-all duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
               >
-                <Send size={18} />
-                SEND MESSAGE
+                {isSubmitting ? (
+                  <>
+                    <Loader2 size={18} className="animate-spin" />
+                    SENDING...
+                  </>
+                ) : (
+                  <>
+                    <Send size={18} />
+                    SEND MESSAGE
+                  </>
+                )}
               </button>
+
+              {submitStatus === 'success' && (
+                <div className="flex items-center gap-2 text-green-400 text-sm">
+                  <CheckCircle size={18} />
+                  <span>Message sent successfully! We'll get back to you soon.</span>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="flex items-center gap-2 text-red-400 text-sm">
+                  <XCircle size={18} />
+                  <span>Failed to send message. Please try again or contact us directly.</span>
+                </div>
+              )}
 
               <p className="text-gray-500 text-xs">
                 * Required fields. By submitting this form, you agree to be contacted regarding your inquiry.
