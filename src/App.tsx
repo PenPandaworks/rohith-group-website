@@ -24,7 +24,19 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       const heroSection = document.getElementById('hero') || document.querySelector('section:first-of-type') as HTMLElement;
-      if (heroSection) {
+      const heritageSection = document.getElementById('heritage');
+      
+      if (heroSection && heritageSection) {
+        const heroHeight = heroSection.offsetHeight;
+        const heritageHeight = heritageSection.offsetHeight;
+        const heritageTop = heritageSection.offsetTop;
+        const scrollPosition = window.scrollY;
+        
+        // Keep header visible until Heritage section is halfway scrolled
+        const hideThreshold = heritageTop + (heritageHeight / 2);
+        setIsHeaderVisible(scrollPosition < hideThreshold);
+      } else if (heroSection) {
+        // Fallback to original behavior if heritage section not found
         const heroHeight = heroSection.offsetHeight;
         const scrollPosition = window.scrollY;
         setIsHeaderVisible(scrollPosition < heroHeight);
@@ -32,6 +44,7 @@ function App() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll(); // Check initial position
     return () => window.removeEventListener('scroll', handleScroll, { passive: true });
   }, []);
 
