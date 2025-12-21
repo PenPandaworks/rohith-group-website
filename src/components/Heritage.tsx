@@ -99,34 +99,6 @@ function Heritage() {
         ))}
       </div>
 
-      {/* Hero Content Overlay */}
-      <div className="relative z-20 flex items-center justify-center min-h-screen pointer-events-none">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center pointer-events-auto">
-          <p className="text-sm md:text-base text-yellow-400/80 tracking-[0.3em] uppercase mb-4">
-            Crafted With Heritage
-          </p>
-          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-6 text-white">
-            ROHITH GROUP
-          </h1>
-          <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-6 md:mb-8 px-4">
-            Premium blends, time-honored techniques, and a commitment to uncompromising quality.
-          </p>
-          <div className="flex items-center justify-center">
-            <button
-              onClick={(e) => {
-                e.preventDefault();
-                const element = document.getElementById('products');
-                if (element) {
-                  element.scrollIntoView({ behavior: 'smooth' });
-                }
-              }}
-              className="btn-shine px-6 py-3 rounded-full border border-white/40 text-white font-semibold tracking-wide bg-transparent hover:border-brand transition-all duration-300"
-            >
-              View Products
-            </button>
-          </div>
-        </div>
-      </div>
     </section>
   );
 }

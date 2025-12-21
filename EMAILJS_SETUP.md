@@ -178,3 +178,4 @@ The Public Key is safe to use in frontend code. It's designed to be public. Howe
 
 **That's it! Your contact form will now send emails directly to your inbox!** 🎉
 
+

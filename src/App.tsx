@@ -73,7 +73,7 @@ function App() {
               onClick={(e) => { e.preventDefault(); scrollToSection('heritage'); }} 
               className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
             >
-              <Logo className="w-[200px] sm:w-[250px] h-auto max-h-[100px]" />
+              <Logo className="w-[150px] sm:w-[200px] md:w-[250px] h-auto max-h-[60px] sm:max-h-[80px] md:max-h-[100px]" style={{ objectFit: 'contain' }} />
             </a>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -133,7 +133,7 @@ function App() {
                 onClick={() => scrollToSection('heritage')}
                 className="mb-4 hover:opacity-80 transition-opacity cursor-pointer inline-block"
               >
-                <Logo className="h-20" />
+                <Logo className="w-[150px] sm:w-[200px] md:w-[250px] h-auto max-h-[60px] sm:max-h-[80px] md:max-h-[100px]" style={{ objectFit: 'contain' }} />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Crafting exceptional spirits with uncompromising quality and time-honored tradition since our founding.
