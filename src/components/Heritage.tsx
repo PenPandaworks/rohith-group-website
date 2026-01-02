@@ -3,8 +3,8 @@ import { useParallax } from '../hooks/useParallax';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SLIDER_IMAGES: string[] = [
-  '/photo slider classico webp.webp',
-  '/photo slider the regal blend webp.webp',
+  '/classsico grapes02 .webp',
+  '/latest photo slider the regal blend.webp',
   '/photo slider feinn webp.webp'
 ];
 
@@ -49,7 +49,7 @@ function Heritage() {
               index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
             }`}
             style={{ 
-              objectPosition: image.includes('regal blend') ? 'top center' : 'center'
+              objectPosition: image.includes('regal blend') || image.includes('latest photo slider') ? 'top center' : 'center'
             }}
             loading={index === currentSlide ? 'eager' : 'lazy'}
             onError={(e) => {

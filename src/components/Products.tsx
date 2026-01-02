@@ -15,7 +15,7 @@ const PRODUCTS: Product[] = [
     name: 'The Regal Blend',
     subtitle: 'Blended Malt Whiskey',
     description: 'Our flagship expression, meticulously aged in charred oak barrels. Rich, complex, with notes of vanilla, caramel, and subtle spice.',
-    image: '/the regal blend.png',
+    image: '/the regal blend cutput webp.webp',
     price: 'Premium Selection'
   },
   {
