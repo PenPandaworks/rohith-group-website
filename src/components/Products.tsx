@@ -7,10 +7,10 @@ function Products() {
   const { offset, elementRef } = useParallax(0.25);
   const products = [
     {
-      name: 'The Royal Blend',
+      name: 'The Regal Blend',
       subtitle: 'Blended Malt Whiskey',
       description: 'Our flagship expression, meticulously aged in charred oak barrels. Rich, complex, with notes of vanilla, caramel, and subtle spice.',
-      image: '/whiskey 01 copy.png',
+      image: '/the regal blend cutput webp.webp',
       price: 'Premium Selection'
     },
     {
@@ -24,7 +24,7 @@ function Products() {
       name: 'Feinn',
       subtitle: 'Premium Vodka',
       description: 'Smooth, refined, and crafted to stand out — Feinn brings clarity to every moment.',
-      image: '/vodka bottles new.png',
+      image: '/feinn_.png',
       price: 'Connoisseur\'s Choice'
     }
   ];
@@ -87,9 +87,7 @@ function ProductCard({ product, onClick }: any) {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className={`h-full w-auto object-contain transition-transform duration-300 hover:scale-110 hover:rotate-3 ${
-                      product.name === 'Classico' ? 'rotate-[-10deg]' : ''
-                    }`}
+                    className="h-full w-auto object-contain transition-transform duration-300 hover:scale-110 hover:rotate-3"
                   />
                 </div>
               </div>
