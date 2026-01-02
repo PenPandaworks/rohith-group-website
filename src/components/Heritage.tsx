@@ -3,8 +3,8 @@ import { useParallax } from '../hooks/useParallax';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const SLIDER_IMAGES: string[] = [
-  '/classsico grapes02 .webp',
-  '/latest photo slider the regal blend.webp',
+  '/photo slider classico webp.webp',
+  '/photo slider the regal blend webp.webp',
   '/photo slider feinn webp.webp'
 ];
 
@@ -36,66 +36,51 @@ function Heritage() {
     <section
       id="heritage"
       ref={elementRef as React.RefObject<HTMLElement>}
-      className="relative w-full border-t-2 border-white/20 overflow-hidden bg-black"
-      style={{ 
-        minHeight: '100vh',
-        height: '100vh',
-        maxHeight: '100vh',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center'
-      }}
+      className="relative min-h-screen border-t-2 border-white/20 overflow-hidden"
     >
       {/* Photo Slider Background */}
-      <div className="absolute inset-0 z-0 w-full h-full flex items-center justify-center">
-        {SLIDER_IMAGES.map((image, index) => {
-          return (
-            <img
-              key={index}
-              src={image}
-              alt={`Slide ${index + 1}`}
-              className={`absolute transition-opacity duration-300 ${
-                index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-              }`}
-              style={{ 
-                objectFit: 'contain',
-                objectPosition: 'center',
-                width: '100%',
-                height: '100%',
-                maxWidth: '100%',
-                maxHeight: '100%'
-              }}
-              loading={index === currentSlide ? 'eager' : 'lazy'}
-              onError={(e) => {
-                const img = e.target as HTMLImageElement;
-                console.error('❌ Failed to load image:', image);
-                console.error('Image src:', img.src);
-                console.error('Expected URL:', window.location.origin + image);
-                img.style.border = '5px solid red';
-                img.style.backgroundColor = '#ff000050';
-              }}
-              onLoad={() => {
-                console.log('✅ Image loaded successfully:', image);
-              }}
-            />
-          );
-        })}
+      <div className="absolute inset-0 z-0">
+        {SLIDER_IMAGES.map((image, index) => (
+          <img
+            key={index}
+            src={image}
+            alt={`Slide ${index + 1}`}
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+              index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+            }`}
+            style={{ 
+              objectPosition: image.includes('regal blend') ? 'top center' : 'center'
+            }}
+            loading={index === currentSlide ? 'eager' : 'lazy'}
+            onError={(e) => {
+              const img = e.target as HTMLImageElement;
+              console.error('❌ Failed to load image:', image);
+              console.error('Image src:', img.src);
+              console.error('Expected URL:', window.location.origin + image);
+              img.style.border = '5px solid red';
+              img.style.backgroundColor = '#ff000050';
+            }}
+            onLoad={() => {
+              console.log('✅ Image loaded successfully:', image);
+            }}
+          />
+        ))}
       </div>
 
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 md:p-4 rounded-full transition-all duration-300 z-30 backdrop-blur-sm"
+        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 rounded-full transition-all duration-300 z-30"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
+        <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 md:p-4 rounded-full transition-all duration-300 z-30 backdrop-blur-sm"
+        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 rounded-full transition-all duration-300 z-30"
         aria-label="Next slide"
       >
-        <ChevronRight size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
+        <ChevronRight size={20} className="sm:w-6 sm:h-6" />
       </button>
 
       {/* Dots Indicator */}
@@ -114,6 +99,34 @@ function Heritage() {
         ))}
       </div>
 
+      {/* Hero Content Overlay */}
+      <div className="relative z-20 flex items-center justify-center min-h-screen pointer-events-none">
+        <div className="max-w-5xl mx-auto px-4 sm:px-6 text-center pointer-events-auto">
+          <p className="text-sm md:text-base text-yellow-400/80 tracking-[0.3em] uppercase mb-4">
+            Crafted With Heritage
+          </p>
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-4 md:mb-6 text-white">
+            ROHITH GROUP
+          </h1>
+          <p className="text-base sm:text-lg md:text-xl text-gray-200 max-w-3xl mx-auto mb-6 md:mb-8 px-4">
+            Premium blends, time-honored techniques, and a commitment to uncompromising quality.
+          </p>
+          <div className="flex items-center justify-center">
+            <button
+              onClick={(e) => {
+                e.preventDefault();
+                const element = document.getElementById('products');
+                if (element) {
+                  element.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+              className="btn-shine px-6 py-3 rounded-full border border-white/40 text-white font-semibold tracking-wide bg-transparent hover:border-brand transition-all duration-300"
+            >
+              View Products
+            </button>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

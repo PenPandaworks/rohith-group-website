@@ -24,19 +24,7 @@ function App() {
   useEffect(() => {
     const handleScroll = () => {
       const heroSection = document.getElementById('hero') || document.querySelector('section:first-of-type') as HTMLElement;
-      const heritageSection = document.getElementById('heritage');
-      
-      if (heroSection && heritageSection) {
-        const heroHeight = heroSection.offsetHeight;
-        const heritageHeight = heritageSection.offsetHeight;
-        const heritageTop = heritageSection.offsetTop;
-        const scrollPosition = window.scrollY;
-        
-        // Keep header visible until Heritage section is halfway scrolled
-        const hideThreshold = heritageTop + (heritageHeight / 2);
-        setIsHeaderVisible(scrollPosition < hideThreshold);
-      } else if (heroSection) {
-        // Fallback to original behavior if heritage section not found
+      if (heroSection) {
         const heroHeight = heroSection.offsetHeight;
         const scrollPosition = window.scrollY;
         setIsHeaderVisible(scrollPosition < heroHeight);
@@ -44,7 +32,6 @@ function App() {
     };
 
     window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll(); // Check initial position
     return () => window.removeEventListener('scroll', handleScroll, { passive: true });
   }, []);
 
@@ -86,7 +73,7 @@ function App() {
               onClick={(e) => { e.preventDefault(); scrollToSection('heritage'); }} 
               className="flex items-center hover:opacity-80 transition-opacity cursor-pointer"
             >
-              <Logo className="w-[150px] sm:w-[200px] md:w-[250px] h-auto max-h-[60px] sm:max-h-[80px] md:max-h-[100px]" style={{ objectFit: 'contain' }} />
+              <Logo className="w-[200px] sm:w-[250px] h-auto max-h-[100px]" />
             </a>
 
             <div className="hidden md:flex items-center space-x-8">
@@ -146,7 +133,7 @@ function App() {
                 onClick={() => scrollToSection('heritage')}
                 className="mb-4 hover:opacity-80 transition-opacity cursor-pointer inline-block"
               >
-                <Logo className="w-[150px] sm:w-[200px] md:w-[250px] h-auto max-h-[60px] sm:max-h-[80px] md:max-h-[100px]" style={{ objectFit: 'contain' }} />
+                <Logo className="h-20" />
               </div>
               <p className="text-gray-400 text-sm leading-relaxed">
                 Crafting exceptional spirits with uncompromising quality and time-honored tradition since our founding.
