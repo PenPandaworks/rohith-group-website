@@ -36,51 +36,74 @@ function Heritage() {
     <section
       id="heritage"
       ref={elementRef as React.RefObject<HTMLElement>}
-      className="relative min-h-screen border-t-2 border-white/20 overflow-hidden"
+      className="relative w-full border-t-2 border-white/20 overflow-hidden"
+      style={{ 
+        minHeight: '100vh',
+        height: '100vh',
+        maxHeight: '100vh'
+      }}
     >
       {/* Photo Slider Background */}
-      <div className="absolute inset-0 z-0">
-        {SLIDER_IMAGES.map((image, index) => (
-          <img
-            key={index}
-            src={image}
-            alt={`Slide ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
-              index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
-            }`}
-            style={{ 
-              objectPosition: image.includes('regal blend') || image.includes('latest photo slider') ? 'top center' : 'center'
-            }}
-            loading={index === currentSlide ? 'eager' : 'lazy'}
-            onError={(e) => {
-              const img = e.target as HTMLImageElement;
-              console.error('❌ Failed to load image:', image);
-              console.error('Image src:', img.src);
-              console.error('Expected URL:', window.location.origin + image);
-              img.style.border = '5px solid red';
-              img.style.backgroundColor = '#ff000050';
-            }}
-            onLoad={() => {
-              console.log('✅ Image loaded successfully:', image);
-            }}
-          />
-        ))}
+      <div className="absolute inset-0 z-0 w-full h-full">
+        {SLIDER_IMAGES.map((image, index) => {
+          // Determine optimal object position based on image and screen size
+          const getObjectPosition = () => {
+            if (image.includes('regal blend') || image.includes('latest photo slider')) {
+              return 'center top';
+            }
+            if (image.includes('classico') || image.includes('grapes')) {
+              return 'center center';
+            }
+            return 'center center';
+          };
+
+          return (
+            <img
+              key={index}
+              src={image}
+              alt={`Slide ${index + 1}`}
+              className={`absolute inset-0 w-full h-full transition-opacity duration-300 ${
+                index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
+              }`}
+              style={{ 
+                objectFit: 'cover',
+                objectPosition: getObjectPosition(),
+                width: '100%',
+                height: '100%',
+                minWidth: '100%',
+                minHeight: '100%'
+              }}
+              loading={index === currentSlide ? 'eager' : 'lazy'}
+              onError={(e) => {
+                const img = e.target as HTMLImageElement;
+                console.error('❌ Failed to load image:', image);
+                console.error('Image src:', img.src);
+                console.error('Expected URL:', window.location.origin + image);
+                img.style.border = '5px solid red';
+                img.style.backgroundColor = '#ff000050';
+              }}
+              onLoad={() => {
+                console.log('✅ Image loaded successfully:', image);
+              }}
+            />
+          );
+        })}
       </div>
 
       {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
-        className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 rounded-full transition-all duration-300 z-30"
+        className="absolute left-2 sm:left-4 md:left-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 md:p-4 rounded-full transition-all duration-300 z-30 backdrop-blur-sm"
         aria-label="Previous slide"
       >
-        <ChevronLeft size={20} className="sm:w-6 sm:h-6" />
+        <ChevronLeft size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
       </button>
       <button
         onClick={nextSlide}
-        className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 rounded-full transition-all duration-300 z-30"
+        className="absolute right-2 sm:right-4 md:right-6 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 md:p-4 rounded-full transition-all duration-300 z-30 backdrop-blur-sm"
         aria-label="Next slide"
       >
-        <ChevronRight size={20} className="sm:w-6 sm:h-6" />
+        <ChevronRight size={20} className="sm:w-6 sm:h-6 md:w-7 md:h-7" />
       </button>
 
       {/* Dots Indicator */}
