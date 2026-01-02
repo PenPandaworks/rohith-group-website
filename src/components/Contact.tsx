@@ -1,4 +1,4 @@
-import { Mail, Phone, Send } from 'lucide-react';
+import { Mail, Phone, Send, CheckCircle } from 'lucide-react';
 import { useState } from 'react';
 import { useParallax } from '../hooks/useParallax';
 
@@ -10,10 +10,33 @@ function Contact() {
     subject: '',
     message: ''
   });
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success'>('idle');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Form submitted:', formData);
+    
+    // Create mailto link with form data
+    const recipientEmail = 'contact.rohithgroup@gmail.com';
+    const subject = encodeURIComponent(`${formData.subject} - ${formData.name}`);
+    const body = encodeURIComponent(
+      `Name: ${formData.name}\n` +
+      `Email: ${formData.email}\n` +
+      `Subject: ${formData.subject}\n\n` +
+      `Message:\n${formData.message}`
+    );
+    
+    // Open user's default email client
+    const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
+    window.location.href = mailtoLink;
+    
+    // Show success message
+    setSubmitStatus('success');
+    setFormData({ name: '', email: '', subject: '', message: '' });
+    
+    // Reset success message after 5 seconds
+    setTimeout(() => {
+      setSubmitStatus('idle');
+    }, 5000);
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -129,6 +152,13 @@ function Contact() {
                 <Send size={18} />
                 SEND MESSAGE
               </button>
+
+              {submitStatus === 'success' && (
+                <div className="flex items-center gap-2 text-green-400 text-sm">
+                  <CheckCircle size={18} />
+                  <span>Your email client will open. Please send the email from there.</span>
+                </div>
+              )}
 
               <p className="text-gray-500 text-xs">
                 * Required fields. By submitting this form, you agree to be contacted regarding your inquiry.
