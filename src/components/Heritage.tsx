@@ -36,42 +36,34 @@ function Heritage() {
     <section
       id="heritage"
       ref={elementRef as React.RefObject<HTMLElement>}
-      className="relative w-full border-t-2 border-white/20 overflow-hidden"
+      className="relative w-full border-t-2 border-white/20 overflow-hidden bg-black"
       style={{ 
         minHeight: '100vh',
         height: '100vh',
-        maxHeight: '100vh'
+        maxHeight: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
       }}
     >
       {/* Photo Slider Background */}
-      <div className="absolute inset-0 z-0 w-full h-full">
+      <div className="absolute inset-0 z-0 w-full h-full flex items-center justify-center">
         {SLIDER_IMAGES.map((image, index) => {
-          // Determine optimal object position based on image and screen size
-          const getObjectPosition = () => {
-            if (image.includes('regal blend') || image.includes('latest photo slider')) {
-              return 'center top';
-            }
-            if (image.includes('classico') || image.includes('grapes')) {
-              return 'center center';
-            }
-            return 'center center';
-          };
-
           return (
             <img
               key={index}
               src={image}
               alt={`Slide ${index + 1}`}
-              className={`absolute inset-0 w-full h-full transition-opacity duration-300 ${
+              className={`absolute transition-opacity duration-300 ${
                 index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
               }`}
               style={{ 
-                objectFit: 'cover',
-                objectPosition: getObjectPosition(),
+                objectFit: 'contain',
+                objectPosition: 'center',
                 width: '100%',
                 height: '100%',
-                minWidth: '100%',
-                minHeight: '100%'
+                maxWidth: '100%',
+                maxHeight: '100%'
               }}
               loading={index === currentSlide ? 'eager' : 'lazy'}
               onError={(e) => {
