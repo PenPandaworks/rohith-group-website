@@ -36,38 +36,37 @@ function Heritage() {
     <section
       id="heritage"
       ref={elementRef as React.RefObject<HTMLElement>}
-      className="relative min-h-screen border-t-2 border-white/20 overflow-hidden"
+      className="relative w-full border-t-2 border-white/20 overflow-hidden bg-black"
+      style={{ 
+        minHeight: '100vh',
+        height: '100vh',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center'
+      }}
     >
-      {/* Photo Slider Background */}
-      <div className="absolute inset-0 z-0">
+      <div className="absolute inset-0 z-0 w-full h-full flex items-center justify-center">
         {SLIDER_IMAGES.map((image, index) => (
           <img
             key={index}
             src={image}
             alt={`Slide ${index + 1}`}
-            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+            className={`absolute transition-opacity duration-300 ${
               index === currentSlide ? 'opacity-100 z-10' : 'opacity-0 z-0'
             }`}
             style={{ 
-              objectPosition: image.includes('regal blend') || image.includes('latest photo slider') ? 'top center' : 'center'
+              objectFit: 'contain',
+              objectPosition: 'center',
+              width: '100%',
+              height: '100%',
+              maxWidth: '100%',
+              maxHeight: '100%'
             }}
             loading={index === currentSlide ? 'eager' : 'lazy'}
-            onError={(e) => {
-              const img = e.target as HTMLImageElement;
-              console.error('❌ Failed to load image:', image);
-              console.error('Image src:', img.src);
-              console.error('Expected URL:', window.location.origin + image);
-              img.style.border = '5px solid red';
-              img.style.backgroundColor = '#ff000050';
-            }}
-            onLoad={() => {
-              console.log('✅ Image loaded successfully:', image);
-            }}
           />
         ))}
       </div>
 
-      {/* Navigation Arrows */}
       <button
         onClick={prevSlide}
         className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-yellow-400 p-2 sm:p-3 rounded-full transition-all duration-300 z-30"
@@ -83,7 +82,6 @@ function Heritage() {
         <ChevronRight size={20} className="sm:w-6 sm:h-6" />
       </button>
 
-      {/* Dots Indicator */}
       <div className="absolute bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 flex gap-2 z-30">
         {SLIDER_IMAGES.map((_, index) => (
           <button

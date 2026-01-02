@@ -15,7 +15,6 @@ function Contact() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Create mailto link with form data
     const recipientEmail = 'contact.rohithgroup@gmail.com';
     const subject = encodeURIComponent(`${formData.subject} - ${formData.name}`);
     const body = encodeURIComponent(
@@ -25,15 +24,12 @@ function Contact() {
       `Message:\n${formData.message}`
     );
     
-    // Open user's default email client
     const mailtoLink = `mailto:${recipientEmail}?subject=${subject}&body=${body}`;
     window.location.href = mailtoLink;
     
-    // Show success message
     setSubmitStatus('success');
     setFormData({ name: '', email: '', subject: '', message: '' });
     
-    // Reset success message after 5 seconds
     setTimeout(() => {
       setSubmitStatus('idle');
     }, 5000);
