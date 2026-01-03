@@ -24,7 +24,7 @@ function Products() {
       name: 'Feinn',
       subtitle: 'Premium Vodka',
       description: 'Smooth, refined, and crafted to stand out — Feinn brings clarity to every moment.',
-      image: '/feinn_.png',
+      image: '/feinn product webp.webp',
       price: 'Connoisseur\'s Choice'
     }
   ];
